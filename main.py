@@ -72,11 +72,11 @@ def work():
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         job = Jobs()
-        job.team_leader = form.team_leader
-        job.job = form.job
-        job.work_size = form.work_size
-        job.collaborators = form.collaborators
-        job.is_finished = form.work_done
+        job.team_leader = form.team_leader.data
+        job.job = form.job.data
+        job.work_size = form.work_size.data
+        job.collaborators = form.collaborators.data
+        job.is_finished = form.work_done.data
         job.start_date = datetime.now()
         job.end_date = datetime.now() + timedelta(days=3)
         db_sess.add(job)
