@@ -1,9 +1,11 @@
 from flask import *
 from data import db_session
 from data.users import User
+from data.jobs import Jobs
 from flask_login import *
 from data.login import LoginForm
 from data.job_form_module import JobForm
+from datetime import *
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -67,6 +69,19 @@ def login():
 @app.route('/addjob', methods=['GET', 'POST'])
 def work():
     form = JobForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        job = Jobs()
+        job.team_leader = form.team_leader
+        job.job = form.job
+        job.work_size = form.work_size
+        job.collaborators = form.collaborators
+        job.is_finished = form.work_done
+        job.start_date = datetime.now()
+        job.end_date = datetime.now() + timedelta(days=3)
+        db_sess.add(job)
+        db_sess.commit()
+        return redirect('/')
     return render_template('addjob.html', title="Работа", form=form)
 
 
