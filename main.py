@@ -3,6 +3,7 @@ from data import db_session
 from data.users import User
 from flask_login import *
 from data.login import LoginForm
+from data.job_form_module import JobForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -61,6 +62,12 @@ def login():
                                message="Неправильный логин или пароль",
                                form=form)
     return render_template('login.html', title='Авторизация', form=form)
+
+
+@app.route('/addjob', methods=['GET', 'POST'])
+def work():
+    form = JobForm()
+    return render_template('addjob.html', title="Работа", form=form)
 
 
 if __name__ == '__main__':
