@@ -11,6 +11,13 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    return redirect('/')
+
+
 @app.route('/')
 @app.route('/index')
 def index():
