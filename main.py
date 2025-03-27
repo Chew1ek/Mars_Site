@@ -22,13 +22,18 @@ def logout():
     return redirect('/')
 
 
-@app.route('/')
-@app.route('/index')
-def index():
+@app.route('/joblist')
+def joblist():
     db_sess = db_session.create_session()
     jobs = db_sess.query(Jobs).all()
     db_sess.commit()
     return render_template('all_jobs.html', jobs=jobs)
+
+
+@app.route('/')
+@app.route('/index')
+def index():
+    return render_template('base.html')
 
 
 @app.route('/test')
