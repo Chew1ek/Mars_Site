@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 align="center">Список работ</h1>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>ID Управляющего</th>
+      <th>Описание работы</th>
+      <th>ID Рабочих</th>
+      <th>Начало</th>
+      <th>Конец</th>
+    </tr>
+  </thead>
+    <tbody>
+        {% for item in jobs%}
+      <tr>
+            <th scope="row">{{item.id}}</th>
+            <td>{{item.team_leader}}</td>
+            <td>{{item.job}}</td>
+            <td>{{item.collaborators}}</td>
+            <td>{{item.start_date}}</td>
+            <td>{{item.end_date}}</td>
+        </tr>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

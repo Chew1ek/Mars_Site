@@ -4,6 +4,7 @@ from data.users import User
 from data.jobs import Jobs
 from flask_login import *
 from data.login import LoginForm
+from data.register import RegisterForm
 from data.job_form_module import JobForm
 from datetime import *
 
@@ -24,7 +25,10 @@ def logout():
 @app.route('/')
 @app.route('/index')
 def index():
-    return render_template('base.html')
+    db_sess = db_session.create_session()
+    jobs = db_sess.query(Jobs).all()
+    db_sess.commit()
+    return render_template('all_jobs.html', jobs=jobs)
 
 
 @app.route('/test')
@@ -64,6 +68,29 @@ def login():
                                message="Неправильный логин или пароль",
                                form=form)
     return render_template('login.html', title='Авторизация', form=form)
+
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        user = User()
+        db_sess = db_session.create_session()
+        user.surname = form.surname.data
+        user.name = form.name.data
+        user.age = form.age.data
+        user.position = form.position.data
+        user.speciality = form.speciality.data
+        user.address = form.address.data
+        user.email = form.email.data
+        user.set_password(form.password.data)
+        db_sess.add(user)
+        try:
+            db_sess.commit()
+        except Exception as e:
+            return render_template('register.html', title='Регистрация', form=form, message='Уже есть такой пользователь')
+        return redirect("/login")
+    return render_template('register.html', title='Регистрация', form=form)
 
 
 @app.route('/addjob', methods=['GET', 'POST'])
