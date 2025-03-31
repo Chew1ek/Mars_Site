@@ -7,6 +7,8 @@ from data.login import LoginForm
 from data.register import RegisterForm
 from data.job_form_module import JobForm
 from datetime import *
+from data import db_session, api
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -43,6 +45,7 @@ def test():
 
 def main():
     db_session.global_init("db/blogs.db")
+    app.register_blueprint(api.blueprint)
     app.run(port=8080, host='127.0.0.1')
 
 

@@ -1,13 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 align="center">Список работ</h1>
 <style>
-    td {
-        overflow-warp: break-word;
-        word-break: break-word;
+  td {
+    overflow-wrap: break-word;
+    word-break: break-word;
+  }
+  .parent {
+  display: flex;
+  justify-content: center;
+  padding-top: 300px;
+}
+    .child{
+    font-size: 150px;
     }
 </style>
+<h1 align="center">Список работ</h1>
 <table class="table table-striped">
   <thead>
     <tr>
